@@ -1,0 +1,3 @@
+# Chrome extension — nothing to ignore normally
+*.DS_Store
+Thumbs.db

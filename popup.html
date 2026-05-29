@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mass Unsubscribe</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+
+    <header>
+      <span class="title">✉ Mass Unsubscribe</span>
+      <button id="signOutBtn" class="link-btn hidden">Sign out</button>
+    </header>
+
+    <div id="authSection">
+      <p class="hint">Sign in with Google to scan your inbox.</p>
+      <button id="signInBtn" class="primary full-width">Sign in with Google</button>
+      <p id="authError" class="hidden error-msg"></p>
+    </div>
+
+    <div id="mainSection" class="hidden">
+
+      <div class="filter-group">
+        <div class="filter-label">Category</div>
+        <div class="chips chips-col" id="categoryChips">
+          <button class="chip" data-cat="promotions">Promotions</button>
+          <button class="chip" data-cat="updates">Updates</button>
+          <button class="chip" data-cat="social">Social</button>
+          <button class="chip" data-cat="forums">Forums</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Importance &amp; State</div>
+        <div class="imp-pair" id="importanceChips">
+          <button class="chip" data-imp="important">🔖 Important</button>
+          <button class="chip" data-imp="not-important"><span class="emoji-dim">🔖</span> Not Important</button>
+        </div>
+        <div class="imp-pair" id="starChips">
+          <button class="chip" data-star="starred">⭐ Starred</button>
+          <button class="chip" data-star="not-starred"><span class="emoji-dim">⭐</span> Not Starred</button>
+        </div>
+        <div class="imp-pair" id="readChips">
+          <button class="chip" data-read="unread">📬 Unread</button>
+          <button class="chip" data-read="read">📭 Read</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Age</div>
+        <div class="chips" id="ageChips">
+          <button class="chip active" data-age="">Any</button>
+          <button class="chip" data-age="6m">&gt; 6 months</button>
+          <button class="chip" data-age="1y">&gt; 1 year</button>
+        </div>
+      </div>
+
+      <div class="query-row">
+        <input id="queryInput" type="text" placeholder="Gmail query…" spellcheck="false" />
+        <button id="currentViewBtn" class="icon-btn" title="Use current Gmail view">⟳</button>
+      </div>
+
+      <div class="options-row">
+        <label class="limit-label">Limit <input id="limitInput" type="number" placeholder="∞" min="1" max="500000" /></label>
+        <button id="deleteChip" class="chip-btn" title="Move successfully unsubscribed threads to Trash">🗑️ Trash after</button>
+      </div>
+
+      <button id="startBtn" class="primary full-width" disabled>▶ Start</button>
+
+      <div id="progressInline" class="hidden">
+        <div class="progress-header">
+          <span id="statusText"></span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div id="progressBar" style="width:0%"></div>
+        </div>
+        <div class="stats-row">
+          <span class="ok">✓ <span id="statOk">0</span> Unsubscribed</span>
+          <span class="fail">✗ <span id="statFail">0</span> Failed</span>
+          <span class="skip">∅ <span id="statSkip">0</span> No Link</span>
+          <span class="muted">🗑️ <span id="statTrash">0</span> Trashed</span>
+        </div>
+        <div id="logList" class="log"></div>
+        <button id="saveReportBtn" class="secondary full-width hidden">Save Failed Unsubscribes</button>
+      </div>
+
+    </div>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
