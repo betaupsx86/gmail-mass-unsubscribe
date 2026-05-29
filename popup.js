@@ -191,8 +191,31 @@ $('currentViewBtn').addEventListener('click', detectCurrentView);
 
 // ── Job ───────────────────────────────────────────────────────────────────────
 
+function isInboxTrashDangerous() {
+  const q = (currentQuery || '').toLowerCase();
+  const deleteOn = $('deleteChip').classList.contains('active');
+  return deleteOn && /\bin:inbox\b/.test(q);
+}
+
 $('startBtn').addEventListener('click', () => {
-  if (isRunning) { stopJob(); } else { startJob(); }
+  if (isRunning) { stopJob(); return; }
+  if (isInboxTrashDangerous()) {
+    $('startBtn').classList.add('hidden');
+    $('inboxWarning').classList.remove('hidden');
+  } else {
+    startJob();
+  }
+});
+
+$('warningCancelBtn').addEventListener('click', () => {
+  $('inboxWarning').classList.add('hidden');
+  $('startBtn').classList.remove('hidden');
+});
+
+$('warningConfirmBtn').addEventListener('click', () => {
+  $('inboxWarning').classList.add('hidden');
+  $('startBtn').classList.remove('hidden');
+  startJob();
 });
 
 $('saveReportBtn').addEventListener('click', () => {

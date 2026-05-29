@@ -68,6 +68,18 @@
 
       <button id="startBtn" class="primary full-width" disabled>▶ Start</button>
 
+      <div id="inboxWarning" class="inbox-warning hidden">
+        <div class="inbox-warning-icon">⚠️</div>
+        <div class="inbox-warning-text">
+          <strong>You are about to trash emails from your entire inbox.</strong>
+          This cannot be undone easily. Are you sure?
+        </div>
+        <div class="inbox-warning-actions">
+          <button id="warningCancelBtn" class="secondary">Cancel</button>
+          <button id="warningConfirmBtn" class="danger-btn">Yes, trash them</button>
+        </div>
+      </div>
+
       <div id="progressInline" class="hidden">
         <div class="progress-header">
           <span id="statusText"></span>

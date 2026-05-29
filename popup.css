@@ -174,3 +174,20 @@ header {
 .log-entry.skip { color: #e37400; }
 
 .hidden { display: none !important; }
+
+/* Inbox trash warning */
+.inbox-warning {
+  background: #fce8e6; border: 1.5px solid #f28b82; border-radius: 8px;
+  padding: 12px; display: flex; flex-direction: column; gap: 10px;
+}
+.inbox-warning-icon { font-size: 22px; text-align: center; }
+.inbox-warning-text { font-size: 12px; color: #c5221f; line-height: 1.5; text-align: center; }
+.inbox-warning-text strong { display: block; margin-bottom: 4px; font-size: 12.5px; }
+.inbox-warning-actions { display: flex; gap: 8px; }
+.inbox-warning-actions .secondary { flex: 1; }
+.danger-btn {
+  flex: 1; background: #d93025; color: #fff; border: none; border-radius: 6px;
+  padding: 9px 16px; font-size: 13px; font-weight: 500; cursor: pointer;
+  font-family: inherit; transition: background 0.15s;
+}
+.danger-btn:hover { background: #b31412; }

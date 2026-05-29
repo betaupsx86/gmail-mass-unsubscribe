@@ -371,6 +371,16 @@ function injectButton() {
     const limit = parseInt(limitInput.value) || 0;
     const deleteAfter = deleteBtn.classList.contains('active');
 
+    // Safety check: trashing all of inbox is irreversible — require confirmation.
+    if (deleteAfter && query && /\bin:inbox\b/.test(query.toLowerCase())) {
+      const ok = window.confirm(
+        '⚠️ Warning: Trash after is enabled and your query targets the entire inbox.\n\n' +
+        'This will trash every successfully unsubscribed email in your inbox.\n\n' +
+        'Are you sure you want to continue?'
+      );
+      if (!ok) return;
+    }
+
     progress.classList.remove('gmu-hidden');
     bar.style.width = '0%';
     statsEl.innerHTML = '';
