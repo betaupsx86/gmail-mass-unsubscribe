@@ -12,8 +12,7 @@
   "permissions": ["identity", "storage", "tabs"],
   "host_permissions": [
     "https://mail.google.com/*",
-    "https://www.googleapis.com/*",
-    "<all_urls>"
+    "https://www.googleapis.com/*"
   ],
 
   "background": { "service_worker": "background.js" },
