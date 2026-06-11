@@ -48,7 +48,11 @@
   <p>Your Google OAuth token is managed entirely by Chrome's identity API. We never see, handle, or store your token or credentials.</p>
 
   <h2>Third parties</h2>
-  <p>We share no data with any third party because we collect no data. The only external service the extension communicates with is Google's Gmail API, which is governed by <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</p>
+  <p>We share no data with any third party because we collect no data. The extension communicates with two kinds of external services:</p>
+  <ul>
+    <li>Google's Gmail API, governed by <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</li>
+    <li>The unsubscribe link found in each email's <code>List-Unsubscribe</code> header — the request goes directly from your browser to that sender's domain, exactly as if you had clicked "Unsubscribe" yourself. No data about you is sent beyond what that request normally contains.</li>
+  </ul>
 
   <h2>Open source</h2>
   <p>The full source code is publicly available on <a href="https://github.com/betaupsx86/gmail-mass-unsubscribe">GitHub</a>. Anyone can audit exactly what the extension does.</p>
