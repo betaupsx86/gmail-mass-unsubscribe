@@ -168,7 +168,7 @@ const BROWSER_HEADERS = {
   'Accept-Language': 'en-US,en;q=0.9',
 };
 
-async function doUnsubscribe(url, usePost) {
+async function attemptUnsubscribe(url, usePost) {
   const ctl = new AbortController();
   const tid = setTimeout(() => ctl.abort(), 10_000);
   try {
@@ -181,11 +181,23 @@ async function doUnsubscribe(url, usePost) {
     let r;
     if (usePost) {
       r = await fetch(url, postOpts);
+      if (!r.ok) {
+        // Some senders advertise List-Unsubscribe-Post but the link is really a
+        // browser-click (GET) endpoint that 4xxs on a bare RFC 8058 POST (e.g.
+        // Calendly returns 422 here). Fall back to GET on the same URL.
+        const postStatus = r.status;
+        r = await fetch(url, { headers: BROWSER_HEADERS, signal: ctl.signal });
+        return { ok: r.ok, status: `${postStatus}→${r.status}(GET)` };
+      }
     } else {
       r = await fetch(url, { headers: BROWSER_HEADERS, signal: ctl.signal });
-      if (r.status === 403 || r.status === 405) {
+      if (!r.ok) {
+        // Some endpoints (e.g. Facebook recruiting opt-outs) reject a plain
+        // GET (500/403/405) but accept the RFC 8058 one-click POST. Fall
+        // back to POST on any non-2xx GET.
+        const getStatus = r.status;
         r = await fetch(url, postOpts);
-        return { ok: r.ok, status: `${r.status}(POST)` };
+        return { ok: r.ok, status: `${getStatus}→${r.status}(POST)` };
       }
     }
     return { ok: r.ok, status: String(r.status) };
@@ -194,6 +206,16 @@ async function doUnsubscribe(url, usePost) {
   } finally {
     clearTimeout(tid);
   }
+}
+
+async function doUnsubscribe(url, usePost) {
+  const result = await attemptUnsubscribe(url, usePost);
+  if (result.status !== 'timeout') return result;
+  // Timeouts are often self-inflicted: 5 workers hammering the same host
+  // (e.g. linkedin.com) at once can make an otherwise-fast endpoint exceed
+  // the 10s budget. Back off briefly and retry once.
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+  return attemptUnsubscribe(url, usePost);
 }
 
 // ── Job state & broadcast ─────────────────────────────────────────────────────

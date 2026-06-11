@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Gmail Mass Unsubscribe",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Mass unsubscribe from Gmail promotions, updates, and any search with one click.",
 
   "oauth2": {
@@ -12,7 +12,9 @@
   "permissions": ["identity", "storage", "tabs"],
   "host_permissions": [
     "https://mail.google.com/*",
-    "https://www.googleapis.com/*"
+    "https://www.googleapis.com/*",
+    "https://*/*",
+    "http://*/*"
   ],
 
   "background": { "service_worker": "background.js" },

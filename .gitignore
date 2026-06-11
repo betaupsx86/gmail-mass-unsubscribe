@@ -1,3 +1,6 @@
 # Chrome extension — nothing to ignore normally
 *.DS_Store
 Thumbs.db
+
+# Local unpacked dev build (regenerate with scripts/setup-dev.sh)
+dev/
